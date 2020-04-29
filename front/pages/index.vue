@@ -2,6 +2,7 @@
 .page-top
   canvas(v-draw)
   button(@click="clear") clear
+  button(@click="answer") answer
 </template>
 
 <script>
@@ -59,9 +60,15 @@ export default {
     clear() {
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
     },
-    update() {
+    answer() {
+      const Tesseract = require('tesseract.js')
       const base64 = this.canvas.toDataURL('image/png')
-      console.log(base64)
+      Tesseract.recognize(base64, 'jpn', {
+        tessedit_pageseg_mode: Tesseract.PSM.SINGLE_WORD,
+        logger: (m) => console.log(m)
+      }).then((result) => {
+        console.log(result)
+      })
     }
   }
 }
