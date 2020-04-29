@@ -1,0 +1,41 @@
+html,
+body
+  font-family 'kodomo-rounded'
+  color #000
+  width 100%
+  height 100%
+  margin 0 auto
+  font-size 16px
+  font-weight 400
+  scroll-behavior smooth
+  -webkit-text-size-adjust 100%
+  font-feature-settings "pkna"
+  -webkit-font-smoothing antialiased
+  -moz-osx-font-smoothing grayscale
+  font-display swap
+  -webkit-overflow-scrolling touch
+  +bp(md)
+    width 100vw
+    height auto
+    position relative
+    overflow-x hidden
+    overflow-y scroll
+custom-scroll(rgba(#fff, 0), rgba(#000, .32), 2, true, false)
+
+br
+  &.sp__br
+    display none
+    +bp(sm)
+      display block
+
+a
+  position relative
+  transition .16s
+  display inline-block
+
+img
+  transition .3s
+  &[lazy=loading]
+    opacity 0
+  &[lazy=loaded]
+    opacity 1

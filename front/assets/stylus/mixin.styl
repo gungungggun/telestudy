@@ -1,0 +1,75 @@
+custom-scroll(color1, color2, width, hasMargin, isRadius)
+  &::-webkit-scrollbar
+    width width px
+  &::-webkit-scrollbar-track
+    if hasMargin
+      margin 0 0 0 20px
+    background color1
+    border-radius 2px
+  &::-webkit-scrollbar-thumb
+    background color2
+    if isRadius
+      border-radius 2px
+
+line-clamp(count=1, line-height=1.5)
+  overflow hidden
+  text-overflow ellipsis
+  line-height line-height
+  //min-height line-height * count
+  if count > 1
+    display -webkit-box
+    -webkit-line-clamp count
+    /*! autoprefixer: ignore next */
+    -webkit-box-orient vertical
+    /* autoprefixer: on */
+  else
+    white-space nowrap
+
+rem(value)
+  if (value is 'auto' || value is 'inherit')
+    return value
+
+  u = unit(value)
+  if (u is 'px')
+    return unit(value/16, 'rem')
+  else
+    return unit(value, u)
+
+remit($property, $sizes)
+  $rems = ()
+  $pxs = ()
+
+  for $size in $sizes
+    push($rems, rem($size))
+    push($pxs, $size)
+
+  add-property($property, $pxs)
+  add-property($property, $rems)
+
+bp(name)
+  if name == 'sm'
+    @media only screen and (max-width: screen-S)
+      {block}
+  else if name == 'md'
+    @media only screen and (max-width: screen-M)
+      {block}
+  else if name == 'lg'
+    @media only screen and (max-width: screen-L)
+      {block}
+  else
+    @media only screen and (max-width: name)
+      {block}
+
+bps(name)
+  if name == 'sm'
+    @media only screen and (min-width: screen-S)
+      {block}
+  else if name == 'md'
+    @media only screen and (min-width: screen-M)
+      {block}
+  else if name == 'lg'
+    @media only screen and (min-width: screen-L)
+      {block}
+  else
+    @media only screen and (max-width: name)
+      {block}

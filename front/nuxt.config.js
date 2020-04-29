@@ -40,8 +40,12 @@ export default {
    */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/style-resources'
   ],
+  styleResources: {
+    stylus: './assets/stylus/set.styl'
+  },
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
