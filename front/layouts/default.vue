@@ -1,16 +1,18 @@
 <template lang="pug">
   div
-    p 毎日漢字やってみよう！
+    TsHeader
     nuxt
 </template>
 
-<style lang="stylus">
-@font-face
-  font-family kodomo-rounded
-  font-weight normal
-  src local(kodomo-rounded),
-  url(/fonts/KodomoRounded.otf) format('opentype')
+<script>
+import TsHeader from '~/components/globals/TsHeader'
+export default {
+  components: {
+    TsHeader
+  }
+}
+</script>
 
-html
-  font-family 'kodomo-rounded', 'Noto Sans JP', "游ゴシック", YuGothic, "ヒラギノ角ゴ ProN W3", Hiragino Kaku Gothic ProN, "Helvetica Neue", Arial, "メイリオ", Meiryo, sans-serif
+<style lang="stylus">
+@import "../assets/stylus/cssset"
 </style>
