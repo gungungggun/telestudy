@@ -27,7 +27,7 @@ export default {
       question: {
         q: '本を読む',
         b: [2, 0, 1, 0],
-        a: ['ほん', 'よ']
+        a: 'ほんよ'
       },
       answers: ['', '', ''],
       canvas: null,
@@ -108,14 +108,32 @@ export default {
       this.ctx.drawImage(img, 0, 0)
     },
     answer() {
-      const Tesseract = require('tesseract.js')
-      const base64 = this.canvas.toDataURL('image/png')
+      this.activeCanvas(this.activeIndex)
+      const canvas = document.createElement('canvas')
+      canvas.width = this.canvas.width * 3
+      canvas.height = this.canvas.height
+      const ctx = canvas.getContext('2d')
+      const img = new Image()
+      img.src = this.answers[0]
+      ctx.drawImage(img, 0, 0)
+      img.src = this.answers[1]
+      ctx.drawImage(img, this.canvas.width, 0)
+      img.src = this.answers[2]
+      ctx.drawImage(img, this.canvas.width * 2, 0)
+      const mix = canvas.toDataURL('image/png')
 
-      Tesseract.recognize(base64, 'jpn', {
+      const self = this
+      const Tesseract = require('tesseract.js')
+      Tesseract.recognize(mix, 'jpn', {
         tessedit_pageseg_mode: Tesseract.PSM.SINGLE_WORD,
         logger: (m) => console.log(m)
       }).then((result) => {
         console.log(result)
+        if (result.data.text.replace(/\s+/g, '') === self.question.a) {
+          alert('正解')
+        } else {
+          alert('間違い:' + result.data.text.replace(/\s+/g, ''))
+        }
       })
     },
     activeCanvas(index) {
@@ -177,4 +195,22 @@ export default {
         button
           font-size 30px
           margin-right 10px
+  .complete
+    display flex
+    justify-content center
+    button
+      font-size 30px
+      border-radius 20px
+      width 180px
+      position relative
+      display inline-block
+      color #FFF
+      background #fd9535
+      border-bottom solid 2px #d27d00
+      border-radius 4px
+      box-shadow inset 0 2px 0 rgba(255,255,255,0.2), 0 2px 2px rgba(0, 0, 0, 0.19)
+      font-weight bold
+      &:active
+        border-bottom solid 2px #fd9535
+        box-shadow 0 0 2px rgba(0, 0, 0, 0.30)
 </style>
