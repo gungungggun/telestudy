@@ -41,7 +41,8 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
-    '@nuxtjs/style-resources'
+    '@nuxtjs/style-resources',
+    'nuxt-fontawesome'
   ],
   styleResources: {
     stylus: './assets/stylus/set.styl'
@@ -59,5 +60,13 @@ export default {
      ** You can extend webpack config here
      */
     extend(config, ctx) {}
-  }
+  },
+  fontawesome: {
+    imports: [
+        {
+          set: '@fortawesome/free-solid-svg-icons',
+          icons: ['fas']
+        }
+    ],
+ }
 }

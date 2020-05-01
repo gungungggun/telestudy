@@ -9,8 +9,11 @@
           img(v-if="answers[index1 + index2] != ''" :src="answers[index1 + index2]")
     .draw(ref="draw")
       canvas(v-draw v-show="isShowCanvas")
-      .buttons
-        button(@click="clear") ぜんぶかきなおす
+      .buttons(v-show="isShowCanvas")
+        button(@click="clear")
+          font-awesome-icon(icon="sync")
+        button(@click="clear")
+          font-awesome-icon(icon="undo")
   .complete
     button(@click="answer") できた
 </template>
@@ -155,4 +158,8 @@ export default {
       .buttons
         position absolute
         bottom 0
+        padding 0 10px
+        button
+          font-size 30px
+          margin-right 10px
 </style>
