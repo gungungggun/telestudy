@@ -12,7 +12,7 @@
       .buttons(v-show="isShowCanvas")
         button(@click="clear")
           font-awesome-icon(icon="sync")
-        button(@click="clear")
+        button(@click="undo")
           font-awesome-icon(icon="undo")
   .complete
     button(@click="answer") できた
@@ -35,7 +35,8 @@ export default {
       offsetX: 0,
       offsetY: 0,
       lastX: null,
-      lastY: null
+      lastY: null,
+      undoDataStack: []
     }
   },
   directives: {
@@ -54,6 +55,7 @@ export default {
         el.addEventListener('touchstart', (e) => {
           const x = e.changedTouches[0].pageX - c.offsetX
           const y = e.changedTouches[0].pageY - c.offsetY
+          c.beforeDraw()
           c.draw(x, y)
         })
         el.addEventListener('touchmove', (e) => {
@@ -69,6 +71,14 @@ export default {
     }
   },
   methods: {
+    beforeDraw() {
+      if (this.undoDataStack.length >= 10) {
+        this.undoDataStack.pop()
+      }
+      this.undoDataStack.unshift(
+        this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height)
+      )
+    },
     draw(x, y) {
       this.ctx.beginPath()
       if (this.lastX == null) {
@@ -83,6 +93,11 @@ export default {
       this.ctx.stroke()
       this.lastX = x
       this.lastY = y
+    },
+    undo() {
+      if (this.undoDataStack.length <= 0) return
+      const imageData = this.undoDataStack.shift()
+      this.ctx.putImageData(imageData, 0, 0)
     },
     clear() {
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
