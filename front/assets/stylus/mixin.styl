@@ -25,6 +25,11 @@ line-clamp(count=1, line-height=1.5)
   else
     white-space nowrap
 
+vertical-write()
+  writing-mode tb-rl
+  -webkit-writing-mode vertical-rl
+  -webkit-text-orientation upright
+
 rem(value)
   if (value is 'auto' || value is 'inherit')
     return value
