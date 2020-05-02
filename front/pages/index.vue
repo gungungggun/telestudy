@@ -20,25 +20,6 @@
 
 <script>
 export default {
-  data() {
-    return {
-      isShowCanvas: false,
-      activeIndex: null,
-      question: {
-        q: '本を読む',
-        b: [2, 0, 1, 0],
-        a: 'ほんよ'
-      },
-      answers: ['', '', ''],
-      canvas: null,
-      ctx: null,
-      offsetX: 0,
-      offsetY: 0,
-      lastX: null,
-      lastY: null,
-      undoDataStack: []
-    }
-  },
   directives: {
     draw: {
       bind(el, binding, vnode) {
@@ -68,6 +49,25 @@ export default {
           c.lastY = null
         })
       }
+    }
+  },
+  data() {
+    return {
+      isShowCanvas: false,
+      activeIndex: null,
+      question: {
+        q: '本を読む',
+        b: [2, 0, 1, 0],
+        a: 'ほんよ'
+      },
+      answers: ['', '', ''],
+      canvas: null,
+      ctx: null,
+      offsetX: 0,
+      offsetY: 0,
+      lastX: null,
+      lastY: null,
+      undoDataStack: []
     }
   },
   methods: {
